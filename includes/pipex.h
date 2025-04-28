@@ -6,7 +6,7 @@
 /*   By: rbestman <rbestman@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:57:15 by rbestman          #+#    #+#             */
-/*   Updated: 2025/04/27 19:25:31 by rbestman         ###   ########.fr       */
+/*   Updated: 2025/04/29 01:35:02 by rbestman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ void	error(void);
 /* pipex.c */
 void	child_process(char **argv, char **envp, int *fd);
 void	parent_process(char **argv, char **envp, int *fd);
+
+/* split.c */
+char	**split_cmd(char *str);
 
 /* utils_bonus.c
 int		get_next_line(char **line);

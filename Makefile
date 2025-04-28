@@ -6,7 +6,7 @@
 #    By: rbestman <rbestman@student.42berlin.d      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/17 12:56:16 by rbestman          #+#    #+#              #
-#    Updated: 2025/04/28 12:47:05 by rbestman         ###   ########.fr        #
+#    Updated: 2025/04/29 01:43:36 by rbestman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CFLAGS = -Wall -Wextra -Werror -Ift_printf -Iincludes
 # Directories
 FT_PRINTF_DIR = ft_printf
 LIBFT_DIR = $(FT_PRINTF_DIR)/libft
-SRC_DIR = SRC
+SRC_DIR = VER
 
 # Ft_printf & libft files
 
@@ -26,7 +26,8 @@ LIBFT = $(LIBFT_DIR)/libft.a
 
 # Source files
 SRC_FILES = $(SRC_DIR)/pipex.c \
-	$(SRC_DIR)/utils.c
+	$(SRC_DIR)/utils.c \
+	$(SRC_DIR)/split.c
 
 # Object files
 OBJ_FILES = $(SRC_FILES:.c=.o)
