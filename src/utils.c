@@ -6,7 +6,7 @@
 /*   By: rbestman <rbestman@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:23:23 by rbestman          #+#    #+#             */
-/*   Updated: 2025/04/27 19:25:51 by rbestman         ###   ########.fr       */
+/*   Updated: 2025/04/28 12:37:07 by rbestman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,8 @@ static char	*find_path(char *cmd, char **envp)
 void	execute(char *argv, char **envp)
 {
 	char	**cmd;
-	int	i;
 	char	*path;
 
-	i = -1;
 	cmd = ft_split(argv, ' ');
 	path = find_path(cmd[0], envp);
 	if (!path || execve(path, cmd, envp) == -1)

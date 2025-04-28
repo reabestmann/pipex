@@ -6,7 +6,7 @@
 #    By: rbestman <rbestman@student.42berlin.d      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/17 12:56:16 by rbestman          #+#    #+#              #
-#    Updated: 2025/04/26 16:45:31 by rbestman         ###   ########.fr        #
+#    Updated: 2025/04/28 12:47:05 by rbestman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,41 +16,42 @@ CFLAGS = -Wall -Wextra -Werror -Ift_printf -Iincludes
 
 # Directories
 FT_PRINTF_DIR = ft_printf
+LIBFT_DIR = $(FT_PRINTF_DIR)/libft
 SRC_DIR = SRC
-MAIN_DIR = main
 
-# Ft_printf file
+# Ft_printf & libft files
 
 FT_PRINTF = $(FT_PRINTF_DIR)/libftprintf.a
+LIBFT = $(LIBFT_DIR)/libft.a
 
 # Source files
 SRC_FILES = $(SRC_DIR)/pipex.c \
 	$(SRC_DIR)/utils.c
 
-//# Main files
-//MAIN_FILES = $(MAIN_DIR)/main.c
-
 # Object files
-OBJ_FILES = $(SRC_FILES:.c=.o) //$(MAIN_FILES:.c=.o)
+OBJ_FILES = $(SRC_FILES:.c=.o)
 
 # Output files
 NAME = pipex
 
 # Default rule
-all: $(FT_PRINTF) $(NAME)
+all: $(FT_PRINTF) $(LIBFT) $(NAME)
 
 # Link program
 $(NAME): $(OBJ_FILES)
-	$(CC) $(CFLAGS) $(OBJ_FILES) $(FT_PRINTF) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ_FILES) $(FT_PRINTF) $(LIBFT) -o $(NAME)
 
 # Call ft_printf's Makefile (it will call libft's Makefile)
 
 $(FT_PRINTF):
 	make -C $(FT_PRINTF_DIR)
 
+$(LIBFT):
+	make -C $(LIBFT_DIR)
+
 # Compile object files
 %.o: %.c
-	$(CC) $(CFLAGS) -C $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 # Cleaning
 clean:
