@@ -6,7 +6,7 @@
 #    By: rbestman <rbestman@student.42berlin.d      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/17 12:56:16 by rbestman          #+#    #+#              #
-#    Updated: 2025/04/17 13:54:09 by rbestman         ###   ########.fr        #
+#    Updated: 2025/04/26 16:45:31 by rbestman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,14 +23,15 @@ MAIN_DIR = main
 
 FT_PRINTF = $(FT_PRINTF_DIR)/libftprintf.a
 
-# Source files (excluding main.c)
-SRC_FILES = $(SRC_DIR)/
+# Source files
+SRC_FILES = $(SRC_DIR)/pipex.c \
+	$(SRC_DIR)/utils.c
 
-# Main files
-MAIN_FILES = $(MAIN_DIR)/main.c
+//# Main files
+//MAIN_FILES = $(MAIN_DIR)/main.c
 
 # Object files
-OBJ_FILES = $(SRC_FILES:.c=.o) $(MAIN_FILES:.c=.o)
+OBJ_FILES = $(SRC_FILES:.c=.o) //$(MAIN_FILES:.c=.o)
 
 # Output files
 NAME = pipex
