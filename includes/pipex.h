@@ -6,14 +6,13 @@
 /*   By: rbestman <rbestman@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:57:15 by rbestman          #+#    #+#             */
-/*   Updated: 2025/04/29 01:35:02 by rbestman         ###   ########.fr       */
+/*   Updated: 2025/05/07 14:27:58 by rbestman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
-#include "ft_printf.h"
 #include "libft.h"
 #include <unistd.h>
 #include <stdlib.h>
@@ -28,11 +27,7 @@
 void	execute(char *argv, char **envp);
 void	error(void);
 
-/* pipex.c */
-void	child_process(char **argv, char **envp, int *fd);
-void	parent_process(char **argv, char **envp, int *fd);
-
-/* split.c */
+/* utils_cmd.c */
 char	**split_cmd(char *str);
 
 /* utils_bonus.c

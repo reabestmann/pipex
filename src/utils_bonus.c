@@ -6,7 +6,7 @@
 /*   By: rbestman <rbestman@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 16:55:35 by rbestman          #+#    #+#             */
-/*   Updated: 2025/04/27 19:20:50 by rbestman         ###   ########.fr       */
+/*   Updated: 2025/05/01 20:45:05 by rbestman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 void	usage(void)
 {
-	ft_putstr_fd("\033[32mError: Input Invalid\n\e[0m", 2);
-	ft_putstr_fd("Usage: ./pipex <file1> <cmd1> <cmd2> <...> <file2>\n", 1);
-	ft_putstr_fd("	     ./pipex \"here doc\" <LIMITER> <cmd> <cmd1> <file>\n", 1);
+	ft_putstr_fd("Error: Input Invalid\n", 2);
+	ft_putstr_fd("Use: ./pipex <file1> <cmd1> <cmd2> <...> <file2>\n", 1);
+	ft_putstr_fd("Or:  ./pipex \"here doc\" <LIMITER> <cmd1>", 1);
+	ft_putstr_fd(" <cmd2> <file>\n", 1);
 	exit(EXIT_SUCCESS);
 }
 
@@ -38,10 +39,10 @@ int	open_file(char *argv, int i)
 
 int	get_next_line(char **line)
 {
-	char    *buffer;
-	int             i;
-	int             r;
-	char    c;
+	char	*buffer;
+	int		i;
+	int		r;
+	char	c;
 
 	i = 0;
 	r = 0;

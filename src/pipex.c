@@ -6,14 +6,15 @@
 /*   By: rbestman <rbestman@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:13:53 by rbestman          #+#    #+#             */
-/*   Updated: 2025/04/27 18:02:49 by rbestman         ###   ########.fr       */
+/*   Updated: 2025/05/01 20:34:14 by rbestman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+/* child process at the read end of pipe */
 /* Function to set up first command to read from infile and write to pipe */
-void	child_process(char **argv, char **envp, int *fd)
+void	child_read(char **argv, char **envp, int *fd)
 {
 	int	infile;
 
@@ -26,8 +27,9 @@ void	child_process(char **argv, char **envp, int *fd)
 	execute(argv[2], envp);
 }
 
+/* child process at the write end of pipe */
 /* Function to set up second command to read from pipe and write to outfile */
-void	parent_process(char **argv, char **envp, int *fd)
+void	child_write(char **argv, char **envp, int *fd)
 {
 	int	outfile;
 
@@ -40,11 +42,32 @@ void	parent_process(char **argv, char **envp, int *fd)
 	execute(argv[3], envp);
 }
 
-/* Main function that handles input, creates a pipe and runs child & parent processes */
+/* Function that creates and manages child processes */
+void	pipex(char **argv, char **envp, int *fd)
+{
+	pid_t	pid1;
+	pid_t	pid2;
+
+	pid1 = fork();
+	if (pid1 == -1)
+		error();
+	if (pid1 == 0)
+		child_read(argv, envp, fd);
+	pid2 = fork();
+	if (pid2 == -1)
+		error();
+	if (pid2 == 0)
+		child_write(argv, envp, fd);
+	close(fd[0]);
+	close(fd[1]);
+	waitpid(pid1, NULL, 0);
+	waitpid(pid2, NULL, 0);
+}
+
+/* Main function that handles input, creates pipe & calls pipex*/
 int	main(int params, char **argv, char **envp)
 {
 	int	fd[2];
-	pid_t	pid1;
 
 	if (!envp)
 		error();
@@ -52,13 +75,7 @@ int	main(int params, char **argv, char **envp)
 	{
 		if (pipe(fd) == -1)
 			error();
-		pid1 = fork();
-		if (pid1 == -1)
-			error();
-		if (pid1 == 0)
-			child_process(argv, envp, fd);
-		waitpid(pid1, NULL, 0);
-		parent_process(argv, envp, fd);
+		pipex(argv, envp, fd);
 	}
 	else
 	{

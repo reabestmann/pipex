@@ -6,7 +6,7 @@
 /*   By: rbestman <rbestman@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 16:55:10 by rbestman          #+#    #+#             */
-/*   Updated: 2025/04/26 17:23:13 by rbestman         ###   ########.fr       */
+/*   Updated: 2025/05/01 20:55:20 by rbestman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,16 +74,14 @@ int	main(int params, char **argv, char **envp)
 		{
 			i = 3;
 			outfile = open_file(argv[params - 1], 0);
-			infile = open_file(argv[1], 2);
-			dup2(infile, STDIN_FILENO);
 		}
 		else
 		{
 			i = 2;
 			outfile = open_file(argv[params - 1], 1);
-			infile = open_file(argv[1], 2);
-			dup2(infile, STDIN_FILENO);
 		}
+		infile = open_file(argv[1], 2);
+		dub2(infile, STDIN_FILENO);
 		while (i < params - 2)
 			child_process(argv[i++], envp);
 		dup2(outfile, STDOUT_FILENO);
