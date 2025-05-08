@@ -6,7 +6,7 @@
 /*   By: rbestman <rbestman@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:13:53 by rbestman          #+#    #+#             */
-/*   Updated: 2025/05/01 20:34:14 by rbestman         ###   ########.fr       */
+/*   Updated: 2025/05/07 20:11:24 by rbestman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	pipex(char **argv, char **envp, int *fd)
 {
 	pid_t	pid1;
 	pid_t	pid2;
+	int		status;
 
 	pid1 = fork();
 	if (pid1 == -1)
@@ -60,8 +61,13 @@ void	pipex(char **argv, char **envp, int *fd)
 		child_write(argv, envp, fd);
 	close(fd[0]);
 	close(fd[1]);
-	waitpid(pid1, NULL, 0);
-	waitpid(pid2, NULL, 0);
+	waitpid(pid1, &status, 0);
+	waitpid(pid2, &status, 0);
+	if (status >> 8 != 0)
+	{
+		perror("Error");
+		exit(status >> 8);
+	}
 }
 
 /* Main function that handles input, creates pipe & calls pipex*/

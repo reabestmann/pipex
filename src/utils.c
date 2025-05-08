@@ -6,7 +6,7 @@
 /*   By: rbestman <rbestman@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:23:23 by rbestman          #+#    #+#             */
-/*   Updated: 2025/04/29 01:40:58 by rbestman         ###   ########.fr       */
+/*   Updated: 2025/05/07 20:13:00 by rbestman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static char	*find_path(char *cmd, char **envp)
 	int		i;
 
 	i = 0;
-	while (!strnstr(envp[i], "PATH", 4))
+	while (!ft_strnstr(envp[i], "PATH", 4))
 		i++;
 	paths = ft_split(envp[i] + 5, ':');
 	i = 0;
@@ -48,7 +48,7 @@ static char	*find_path(char *cmd, char **envp)
 		part_path = ft_strjoin(paths[i], "/");
 		path = ft_strjoin(part_path, cmd);
 		free(part_path);
-		if (access(path, F_OK) == 0)
+		if (access(path, F_OK) == 0 && access(path, X_OK) == 0)
 		{
 			free_array(paths);
 			return (path);
@@ -57,7 +57,7 @@ static char	*find_path(char *cmd, char **envp)
 		i++;
 	}
 	free_array(paths);
-	return (0);
+	return (NULL);
 }
 
 /* Function that prepares the command and runs it */
@@ -70,7 +70,9 @@ void	execute(char *argv, char **envp)
 	path = find_path(cmd[0], envp);
 	if (!path || execve(path, cmd, envp) == -1)
 	{
+		perror("Error");
 		free_array(cmd);
-		error();
+		free(path);
+		exit(127);
 	}
 }

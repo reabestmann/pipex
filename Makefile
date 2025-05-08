@@ -6,7 +6,7 @@
 #    By: rbestman <rbestman@student.42berlin.d      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/17 12:56:16 by rbestman          #+#    #+#              #
-#    Updated: 2025/05/01 21:11:06 by rbestman         ###   ########.fr        #
+#    Updated: 2025/05/07 17:57:01 by rbestman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CFLAGS = -Wall -Wextra -Werror -Ilibft -Iincludes
 # Directories
 
 LIBFT_DIR = libft
-SRC_DIR = SRC
+SRC_DIR = src
 
 # libft files
 
@@ -47,7 +47,7 @@ $(LIBFT):
 	make -C $(LIBFT_DIR)
 
 # Compile object files
-%.o: %.c
+$(SRC_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Cleaning
