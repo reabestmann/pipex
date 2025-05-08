@@ -6,7 +6,7 @@
 /*   By: rbestman <rbestman@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:23:23 by rbestman          #+#    #+#             */
-/*   Updated: 2025/05/07 20:13:00 by rbestman         ###   ########.fr       */
+/*   Updated: 2025/05/08 15:43:39 by rbestman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	execute(char *argv, char **envp)
 	path = find_path(cmd[0], envp);
 	if (!path || execve(path, cmd, envp) == -1)
 	{
-		perror("Error");
+		ft_putstr_fd("Error: command not found\n", 2);
 		free_array(cmd);
 		free(path);
 		exit(127);

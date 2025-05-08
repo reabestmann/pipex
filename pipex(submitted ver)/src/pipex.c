@@ -6,7 +6,7 @@
 /*   By: rbestman <rbestman@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:13:53 by rbestman          #+#    #+#             */
-/*   Updated: 2025/05/07 20:11:24 by rbestman         ###   ########.fr       */
+/*   Updated: 2025/05/08 15:45:59 by rbestman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,22 @@ void	pipex(char **argv, char **envp, int *fd)
 	}
 }
 
+/* Function that checks input for empty arguments */
+static int	check_empty(char **argv)
+{
+	int	i;
+
+	i = 1;
+	while (argv[i])
+	{
+		if (argv[i][0] != '\0')
+			i++;
+		else
+			return (0);
+	}
+	return (1);
+}
+
 /* Main function that handles input, creates pipe & calls pipex*/
 int	main(int params, char **argv, char **envp)
 {
@@ -77,7 +93,7 @@ int	main(int params, char **argv, char **envp)
 
 	if (!envp)
 		error();
-	if (params == 5)
+	if (params == 5 && check_empty(argv))
 	{
 		if (pipe(fd) == -1)
 			error();
