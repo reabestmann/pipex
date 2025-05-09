@@ -6,7 +6,7 @@
 /*   By: rbestman <rbestman@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:13:53 by rbestman          #+#    #+#             */
-/*   Updated: 2025/05/08 15:45:59 by rbestman         ###   ########.fr       */
+/*   Updated: 2025/05/08 19:07:39 by rbestman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	child_read(char **argv, char **envp, int *fd)
 
 	infile = open(argv[1], O_RDONLY, 0);
 	if (infile == -1)
-		error();
+		error(argv[1], 1);
 	dup2(fd[1], STDOUT_FILENO);
 	dup2(infile, STDIN_FILENO);
 	close(fd[0]);
@@ -35,7 +35,7 @@ void	child_write(char **argv, char **envp, int *fd)
 
 	outfile = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (outfile == -1)
-		error();
+		error(argv[4], 1);
 	dup2(fd[0], STDIN_FILENO);
 	dup2(outfile, STDOUT_FILENO);
 	close(fd[1]);
@@ -51,12 +51,12 @@ void	pipex(char **argv, char **envp, int *fd)
 
 	pid1 = fork();
 	if (pid1 == -1)
-		error();
+		error("fork", 1);
 	if (pid1 == 0)
 		child_read(argv, envp, fd);
 	pid2 = fork();
 	if (pid2 == -1)
-		error();
+		error("fork", 1);
 	if (pid2 == 0)
 		child_write(argv, envp, fd);
 	close(fd[0]);
@@ -65,7 +65,8 @@ void	pipex(char **argv, char **envp, int *fd)
 	waitpid(pid2, &status, 0);
 	if (status >> 8 != 0)
 	{
-		perror("Error");
+		if (errno)
+			error("Error", status >> 8);
 		exit(status >> 8);
 	}
 }
@@ -92,11 +93,11 @@ int	main(int params, char **argv, char **envp)
 	int	fd[2];
 
 	if (!envp)
-		error();
+		error("Error", 1);
 	if (params == 5 && check_empty(argv))
 	{
 		if (pipe(fd) == -1)
-			error();
+			error("Pipe", 1);
 		pipex(argv, envp, fd);
 	}
 	else

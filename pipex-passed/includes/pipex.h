@@ -6,7 +6,7 @@
 /*   By: rbestman <rbestman@student.42berlin.d      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:57:15 by rbestman          #+#    #+#             */
-/*   Updated: 2025/05/08 16:35:26 by rbestman         ###   ########.fr       */
+/*   Updated: 2025/05/08 18:53:01 by rbestman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 /* utils.c */
 void	execute(char *argv, char **envp);
-void	error(void);
+void	error(char *msg, int status);
 
 /* utils_cmd.c */
 char	**split_cmd(char *str);

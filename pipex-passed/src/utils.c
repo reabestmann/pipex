@@ -6,17 +6,17 @@
 /*   By: rbestman <rbestman@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:23:23 by rbestman          #+#    #+#             */
-/*   Updated: 2025/05/08 15:43:39 by rbestman         ###   ########.fr       */
+/*   Updated: 2025/05/08 19:01:57 by rbestman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 /* Function to print & format system error messages and exit the program */
-void	error(void)
+void	error(char *msg, int status)
 {
-	perror("Error");
-	exit(1);
+	perror(msg);
+	exit(status);
 }
 
 /* Function to free array memory */
@@ -70,7 +70,9 @@ void	execute(char *argv, char **envp)
 	path = find_path(cmd[0], envp);
 	if (!path || execve(path, cmd, envp) == -1)
 	{
-		ft_putstr_fd("Error: command not found\n", 2);
+		ft_putstr_fd("zsh: command not found: ", 2);
+		ft_putstr_fd(cmd[0], 2);
+		ft_putstr_fd("\n", 2);
 		free_array(cmd);
 		free(path);
 		exit(127);
